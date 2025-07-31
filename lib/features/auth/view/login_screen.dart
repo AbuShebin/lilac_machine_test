@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lilac/core/utils/theme/theme.dart';
 import 'package:lilac/core/widgets/CustomFloatingButton.dart';
-import 'package:lilac/features/auth/presentation/phone_number_screen.dart';
+import 'package:lilac/features/auth/view/phone_number_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lilac/core/utils/theme/theme.dart';
 import 'package:lilac/core/widgets/CustomFloatingButton.dart';
-import 'package:lilac/features/auth/application/otp_controller.dart';
+import 'package:lilac/features/auth/controller/otp_controller.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpVerificationScreen extends ConsumerWidget {
   final String phomeNumber;
-  OtpVerificationScreen({required this.phomeNumber});
+  const OtpVerificationScreen({required this.phomeNumber});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
 
@@ -46,7 +46,7 @@ class OtpVerificationScreen extends ConsumerWidget {
                 ),
               ],
             ),
-            Pinput(length: 6,controller: otpController,),
+            Pinput(length: 6, controller: otpController),
 
             SizedBox(height: h * 0.02),
 
@@ -70,23 +70,21 @@ class OtpVerificationScreen extends ConsumerWidget {
             CustomFloatingButton(
               text: "Next",
               onPressed: () {
-  final otpText = otpController.text.trim();
+                final otpText = otpController.text.trim();
 
-  if (otpText.isEmpty || int.tryParse(otpText) == null) {
-    // Show error or toast
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Please enter a valid OTP')),
-    );
-    return;
-  }
+                if (otpText.isEmpty || int.tryParse(otpText) == null) {
+                  // Show error or toast
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Please enter a valid OTP')),
+                  );
+                  return;
+                }
 
-  final otp = int.parse(otpText);
-  ref.read(otpControllerProvider.notifier).verifyOtp(
-    phone: phomeNumber,
-    otp: otp,
-    context: context,
-  );
-},
+                final otp = int.parse(otpText);
+                ref
+                    .read(otpControllerProvider.notifier)
+                    .verifyOtp(phone: phomeNumber, otp: otp, context: context);
+              },
               buttonColor: Palette.signInwithPhoneNumberColor,
               textColor: Colors.white,
             ),

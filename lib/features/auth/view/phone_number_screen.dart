@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lilac/core/utils/theme/theme.dart';
 import 'package:lilac/core/widgets/CustomFloatingButton.dart';
-import 'package:lilac/features/auth/application/otp_controller.dart';
-import 'package:lilac/features/auth/presentation/otp_verification_screen.dart';
+import 'package:lilac/features/auth/controller/otp_controller.dart';
+import 'package:lilac/features/auth/view/otp_verification_screen.dart';
 
 class PhoneNumberScreen extends ConsumerWidget {
   PhoneNumberScreen({super.key});

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lilac/core/provider/customer_model_provider.dart';
 import 'package:lilac/core/utils/custom_snackBar.dart';
 import 'package:lilac/core/utils/theme/theme.dart';
-import 'package:lilac/features/auth/data/otp_service.dart';
-import 'package:lilac/features/auth/presentation/otp_verification_screen.dart';
-import 'package:lilac/features/chat/presentation/home_screen.dart';
+import 'package:lilac/features/auth/service/otp_service.dart';
+import 'package:lilac/features/auth/view/otp_verification_screen.dart';
+import 'package:lilac/features/chat/view/chat_screen.dart';
+import 'package:lilac/features/contach_users/view/contact_users_screen.dart';
 
 final otpControllerProvider = NotifierProvider<OtpController, int>(
   () => OtpController(),
@@ -43,13 +45,13 @@ class OtpController extends Notifier<int> {
 
     return res.fold(
       (l) { 
-        print(l.errMSg);
            showSnackBar(
         content: "Invalid OTP",
         context: context,
         color: Palette.snackBarErrorColor,
       );},
       (r)  {
+        ref.read(customerModelProvider.notifier).update((state) => r,);
         showSnackBar(
           content: "Otp has been sent to your phone number",
           context: context,
@@ -58,7 +60,7 @@ class OtpController extends Notifier<int> {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) {
-              return HomeScreen();
+              return ContactUsersScreen();
             },
           ),
           (route) => false,
