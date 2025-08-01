@@ -1,4 +1,5 @@
-import 'package:lilac/features/contach_users/models/user_settings.dart';
+
+import 'package:lilac/features/messages/models/user_settings.dart';
 
 class CustomerRelationships {
   final List<dynamic> blockedContacts;

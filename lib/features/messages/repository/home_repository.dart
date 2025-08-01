@@ -4,17 +4,16 @@ import 'package:fpdart/fpdart.dart';
 import 'package:lilac/core/constants/api_constants.dart';
 import 'package:lilac/core/utils/errorhandling/failure.dart';
 import 'package:lilac/core/utils/errorhandling/type_defs.dart';
-import 'package:lilac/features/contach_users/models/customer_model.dart';
+import 'package:lilac/features/messages/models/customer_model.dart';
 
 final messagesRepositoryProvider = StateProvider((ref) => MesagesRepository());
 
 class MesagesRepository {
   Dio dio = Dio();
-  FutureEither<List<CustomerModel>> getContactUsers({
-    required String userId,
-  }) async {
+  FutureEither<List<CustomerModel>> getContactUsers() async {
     try {
-      final response = await dio.get(ApiConstants.contactUsersUrl,options: Options(
+      print(ApiConstants.chatURl);
+      final response = await dio.get("${ApiConstants.chatURl}",options: Options(
     headers: {
       'Authorization': 'Bearer 1356|SkO0fO5rMEXmh4GZ1K9YjXaIShxpfi608I2HvCT51e157730',
     },

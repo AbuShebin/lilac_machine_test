@@ -3,8 +3,8 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lilac/features/contach_users/controller/contact_users_controller.dart';
-import 'package:lilac/features/contach_users/models/customer_model.dart';
+import 'package:lilac/features/messages/controller/contact_users_controller.dart';
+import 'package:lilac/features/messages/models/customer_model.dart';
 
 final messagesAsyncNotifierProvider = AutoDisposeAsyncNotifierProvider<MessagesNotifierProvider, List<CustomerModel>>(
   () {

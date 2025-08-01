@@ -1,5 +1,7 @@
-import 'package:lilac/features/contach_users/models/customer_attributes_model.dart';
-import 'package:lilac/features/contach_users/models/customer_relations.dart';
+
+
+import 'package:lilac/features/messages/models/customer_attributes_model.dart';
+import 'package:lilac/features/messages/models/customer_relations.dart';
 
 class CustomerModel {
   final String type;

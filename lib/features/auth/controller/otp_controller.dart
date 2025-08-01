@@ -5,8 +5,7 @@ import 'package:lilac/core/utils/custom_snackBar.dart';
 import 'package:lilac/core/utils/theme/theme.dart';
 import 'package:lilac/features/auth/service/otp_service.dart';
 import 'package:lilac/features/auth/view/otp_verification_screen.dart';
-import 'package:lilac/features/chat/view/chat_screen.dart';
-import 'package:lilac/features/contach_users/view/contact_users_screen.dart';
+import 'package:lilac/features/messages/view/contact_users_screen.dart';
 
 final otpControllerProvider = NotifierProvider<OtpController, int>(
   () => OtpController(),

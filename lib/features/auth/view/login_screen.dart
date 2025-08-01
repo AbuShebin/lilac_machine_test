@@ -39,7 +39,7 @@ class LoginScreen extends StatelessWidget {
                   Padding(
                     padding:  EdgeInsets.only(left:  w*0.05,right: w*0.05,top: w*0.03),
                     child: CustomFloatingButton(text: "Sign in with Phone number", onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PhoneNumberScreen(),));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PhoneLoginScreen(),));
                     },buttonColor: Palette.signInwithPhoneNumberColor,textColor: Colors.white,image: "lib/assets/images/phone.png",),
                   ),
                   Padding(

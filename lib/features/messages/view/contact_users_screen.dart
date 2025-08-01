@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lilac/core/provider/customer_model_provider.dart';
+import 'package:lilac/core/utils/theme/theme.dart';
 import 'package:lilac/core/widgets/customTextField_common.dart';
+import 'package:lilac/features/auth/view/login_screen.dart';
 import 'package:lilac/features/chat/view/chat_screen.dart';
-import 'package:lilac/features/contach_users/provider/messages_provider.dart';
+import 'package:lilac/features/messages/provider/home_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ContactUsersScreen extends ConsumerStatefulWidget {
   const ContactUsersScreen({super.key});
@@ -26,6 +29,16 @@ class _HomeScreenState extends ConsumerState<ContactUsersScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Messages", style: TextStyle(fontWeight: FontWeight.bold)),
+        actions: [
+          IconButton(onPressed: () async{
+            SharedPreferences prefs =await SharedPreferences.getInstance();
+            prefs.remove("userId");
+            prefs.remove("isLoggedIn");
+
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => LoginScreen(),), (route) => false,);
+
+          }, icon: Icon(Icons.logout))
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -68,10 +81,34 @@ class _HomeScreenState extends ConsumerState<ContactUsersScreen> {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: CustomTextField(labelText: "Search", h: h, w: w * 0.95),
+             Padding(
+            padding:  EdgeInsets.only(left:  w*0.02,right: w*0.02),
+            child:  SizedBox(
+            width: w,
+            child: TextFormField(
+              style: TextStyle(
+                fontFamily: 'Urbanist',
+                fontSize: w * 0.037,
+                color: Palette.blackColor,
+              ),
+              decoration: InputDecoration(
+                hintText: "Search",
+                hintStyle: TextStyle(
+                  fontFamily: 'Urbanist',
+                  fontSize: w * 0.036,
+                  color: Palette.blackColor,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(w * 0.06),
+                  borderSide: BorderSide(color: Colors.grey, width: w * 0.01),
+                ),
+                suffixIcon: Icon(Icons.search),
+                
+              ),
             ),
+          ),
+          ),
+    
 
             SizedBox(height: h * 0.015),
 
@@ -101,12 +138,12 @@ class _HomeScreenState extends ConsumerState<ContactUsersScreen> {
                               data[index].attributes.profilePhotoUrl ?? '',
                             ),
                             backgroundColor:
-                                Colors.grey[200], // optional placeholder color
+                                Colors.grey[200],
                           ),
                           title: Text(data[index].attributes.name,style: TextStyle(fontWeight: FontWeight.bold),),
                           onTap: () => Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => ChatScreen(),
+                              builder: (context) => ChatScreen(otherUserID: data[index].id,userName: data[index].attributes.name,),
                             ),
                           ),
                           trailing: Text(data[index].attributes.messageReceivedFromPartnerAt.substring(0,10)),

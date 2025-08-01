@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lilac/core/provider/customer_model_provider.dart';
 import 'package:lilac/features/auth/view/login_screen.dart';
-import 'package:lilac/features/contach_users/view/contact_users_screen.dart';
+import 'package:lilac/features/messages/view/contact_users_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
