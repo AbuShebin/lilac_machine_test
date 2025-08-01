@@ -52,9 +52,12 @@ class OtpController extends Notifier<int> {
         );
       },
       (r) {
-                print("right worked");
+        print("right worked");
 
-        ref.read(customerModelProvider.notifier).update((state) => r);
+        final data = ref
+            .read(customerModelProvider.notifier)
+            .update((state) => r);
+        ref.read(userIdProvider.notifier).update((state) => data?.id,);
 
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(

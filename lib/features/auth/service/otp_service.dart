@@ -79,6 +79,7 @@ class OtpService {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool("isLoggedIn", true);
         prefs.setString("userId", data["id"]);
+
         return right(CustomerModel.fromJson(data));
       } else {
         final decoded = Japx.decode(response.data);
