@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lilac/features/auth/view/login_screen.dart';
 import 'package:lilac/features/auth/view/splash_screen.dart';
 
 void main() {

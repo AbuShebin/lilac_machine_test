@@ -15,6 +15,10 @@ class _PhoneLoginScreenState extends ConsumerState<PhoneLoginScreen> {
   final phoneNumberController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  // Clean validation constants
+  static const int _phoneNumberLength = 10;
+  static const String _phonePattern = r'^[0-9]{10}$';
+
   @override
   Widget build(BuildContext context) {
     final h = MediaQuery.of(context).size.height;
@@ -22,13 +26,19 @@ class _PhoneLoginScreenState extends ConsumerState<PhoneLoginScreen> {
 
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(w * 0.05),
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: h - kToolbarHeight - MediaQuery.of(context).padding.top - (w * 0.1),
+            ),
+            child: IntrinsicHeight(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
               SizedBox(height: h * 0.05),
               Text(
                 "Enter your phone\nnumber",
@@ -40,46 +50,52 @@ class _PhoneLoginScreenState extends ConsumerState<PhoneLoginScreen> {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: h * 0.04),
-              Container(
-                height: h * 0.06,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(width: w * 0.03),
-                    Text("+91", style: TextStyle(fontSize: h * 0.02)),
-                    Icon(Icons.arrow_drop_down, color: Colors.grey),
-                    SizedBox(
-                      child: VerticalDivider(color: Colors.grey),
-                      height: h * 0.03,
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        controller: phoneNumberController,
-                        keyboardType: TextInputType.phone,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Phone number",
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: w * 0.02,
-                          ),
+              TextFormField(
+                controller: phoneNumberController,
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                  prefixIcon: Container(
+                    width: w * 0.2,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(width: w * 0.03),
+                        Text("+91", style: TextStyle(fontSize: h * 0.02)),
+                        Icon(Icons.arrow_drop_down, color: Colors.grey, size: h * 0.02),
+                        SizedBox(
+                          child: VerticalDivider(color: Colors.grey),
+                          height: h * 0.03,
                         ),
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return 'Phone number is required';
-                          }
-                          if (!RegExp(r'^[0-9]{10}$')
-                              .hasMatch(value.trim())) {
-                            return 'Enter a valid 10-digit phone number';
-                          }
-                          return null;
-                        },
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
+                  hintText: "Phone number",
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: w * 0.02,
+                    vertical: h * 0.02,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.red, width: 2),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.red, width: 2),
+                  ),
                 ),
+                validator: _validatePhoneNumber,
               ),
               SizedBox(height: h * 0.02),
               const Text(
@@ -104,7 +120,25 @@ class _PhoneLoginScreenState extends ConsumerState<PhoneLoginScreen> {
           ),
         ),
       ),
-    );
+    )));
+  }
+
+  /// Validates phone number input
+  /// Returns error message if validation fails, null if valid
+  String? _validatePhoneNumber(String? value) {
+    // Check if value is null or empty
+    if (value == null || value.trim().isEmpty) {
+      return 'Phone number is required';
+    }
+
+    final trimmedValue = value.trim();
+
+    // Check if it contains only digits and has correct length
+    if (!RegExp(_phonePattern).hasMatch(trimmedValue)) {
+      return 'Enter a valid $_phoneNumberLength-digit phone number';
+    }
+
+    return null; // Valid input
   }
 
   void login({

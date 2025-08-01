@@ -22,40 +22,40 @@ class OtpController extends Notifier<int> {
         color: Palette.snackBarErrorColor,
       ),
       (r) {
-        showSnackBar(
-          content: "Otp has been sent to your phone number",
-          context: context,
-          color: Palette.snackBarSuccessColor,
-        );
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) {
-              return OtpVerificationScreen(phomeNumber: phone);
+              return OtpVerificationScreen(phoneNumber: phone);
             },
           ),
         );
       },
     );
   }
-  
-  
-  verifyOtp({required String phone,required int otp, required BuildContext context}) async {
-    final res = await ref.read(otpServiceProvider).verifyOtp(phoneNumber: phone, otp: otp);
+
+  verifyOtp({
+    required String phone,
+    required int otp,
+    required BuildContext context,
+  }) async {
+    final res = await ref
+        .read(otpServiceProvider)
+        .verifyOtp(phoneNumber: phone, otp: otp);
 
     return res.fold(
-      (l) { 
-           showSnackBar(
-        content: "Invalid OTP",
-        context: context,
-        color: Palette.snackBarErrorColor,
-      );},
-      (r)  {
-        ref.read(customerModelProvider.notifier).update((state) => r,);
+      (l) {
+        print("left worked ${l.errMSg}");
         showSnackBar(
-          content: "Otp has been sent to your phone number",
+          content: "Invalid OTP",
           context: context,
-          color: Palette.snackBarSuccessColor,
+          color: Palette.snackBarErrorColor,
         );
+      },
+      (r) {
+                print("right worked");
+
+        ref.read(customerModelProvider.notifier).update((state) => r);
+
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) {

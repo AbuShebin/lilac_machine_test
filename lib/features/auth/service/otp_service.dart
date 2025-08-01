@@ -4,11 +4,13 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:japx/japx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:lilac/core/constants/api_constants.dart';
 import 'package:lilac/core/utils/errorhandling/failure.dart';
 import 'package:lilac/core/utils/errorhandling/type_defs.dart';
 import 'package:lilac/features/auth/model/customer_base_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final otpServiceProvider = StateProvider((ref) => OtpService());
 
@@ -40,7 +42,7 @@ class OtpService {
     }
   }
 
-  FutureEither<CustomerBaseModelModel> verifyOtp({
+  FutureEither<CustomerModel> verifyOtp({
     required String phoneNumber,
     required int otp,
   }) async {
@@ -68,17 +70,19 @@ class OtpService {
           },
         },
       );
+
       if (response.statusCode == 200) {
-        final res = response.data;
+        final decoded = Japx.decode(response.data);
+        final data = decoded['data'];
+        log(data.toString());
 
-          SharedPreferences prefs =await SharedPreferences.getInstance();
-          prefs.setBool("isLoggedIn",true);
-          prefs.setString("userId",res["data"]["id"]);
-
-          return right(CustomerBaseModelModel.fromJson(res["data"]));
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool("isLoggedIn", true);
+        prefs.setString("userId", data["id"]);
+        return right(CustomerModel.fromJson(data));
       } else {
-        final res = response.data;
-        return left(Failure(errMSg: res["error"]["message"]));
+        final decoded = Japx.decode(response.data);
+        return left(Failure(errMSg: decoded["error"]["message"]));
       }
     } catch (e) {
       return left(Failure(errMSg: e.toString()));

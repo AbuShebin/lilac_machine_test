@@ -6,16 +6,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lilac/features/messages/controller/contact_users_controller.dart';
 import 'package:lilac/features/messages/models/customer_model.dart';
 
-final messagesAsyncNotifierProvider = AutoDisposeAsyncNotifierProvider<MessagesNotifierProvider, List<CustomerModel>>(
+final messagesAsyncNotifierProvider = AutoDisposeAsyncNotifierProvider<MessagesNotifierProvider, List<CustomerContactListModel>>(
   () {
     return MessagesNotifierProvider();
   },
 );
 
 class MessagesNotifierProvider
-    extends AutoDisposeAsyncNotifier<List<CustomerModel>> {
+    extends AutoDisposeAsyncNotifier<List<CustomerContactListModel>> {
   @override
-  FutureOr<List<CustomerModel>> build() {
+  FutureOr<List<CustomerContactListModel>> build() {
     return fetchContactUsers();
   }
 

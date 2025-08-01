@@ -7,7 +7,7 @@ final constactControllerProvider = NotifierProvider<ConstactController, int>(
 );
 
 class ConstactController extends Notifier<int> {
-Future<List<CustomerModel>>  getContactUsers() async {
+Future<List<CustomerContactListModel>>  getContactUsers() async {
     final userId = ref.read(userIdProvider);
     if(userId == null){
       throw "user id is null";

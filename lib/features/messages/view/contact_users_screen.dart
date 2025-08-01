@@ -61,14 +61,14 @@ class _HomeScreenState extends ConsumerState<ContactUsersScreen> {
                               CircleAvatar(
                                 radius: w * 0.07,
                                 backgroundImage: NetworkImage(
-                                  data[index].attributes.profilePhotoUrl ?? '',
+                                  data[index].profilePhotoUrl ?? '',
                                 ),
                                 backgroundColor: Colors
                                     .grey[200], // optional placeholder color
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                data[index].attributes.name,
+                                data[index].name,
                                 style: TextStyle(fontSize: 12),
                               ),
                             ],
@@ -135,18 +135,18 @@ class _HomeScreenState extends ConsumerState<ContactUsersScreen> {
                           leading: CircleAvatar(
                             radius: w * 0.07,
                             backgroundImage: NetworkImage(
-                              data[index].attributes.profilePhotoUrl ?? '',
+                              data[index].profilePhotoUrl ?? '',
                             ),
                             backgroundColor:
                                 Colors.grey[200],
                           ),
-                          title: Text(data[index].attributes.name,style: TextStyle(fontWeight: FontWeight.bold),),
+                          title: Text(data[index].name,style: TextStyle(fontWeight: FontWeight.bold),),
                           onTap: () => Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => ChatScreen(otherUserID: data[index].id,userName: data[index].attributes.name,),
+                              builder: (context) => ChatScreen(otherUserID: data[index].id,userName: data[index].name,),
                             ),
                           ),
-                          trailing: Text(data[index].attributes.messageReceivedFromPartnerAt.substring(0,10)),
+                          trailing: Text(data[index].messageReceivedFromPartnerAt.substring(0,10)),
                         ),
                       ),
                       error: (error, stackTrace) => Text(error.toString()),

@@ -1,50 +1,53 @@
-import 'package:lilac/features/auth/model/attributes_model.dart';
 
-class CustomerBaseModelModel {
-  final String type;
+class CustomerModel {
   final String id;
-  final AttributesModel attributes;
-  CustomerBaseModelModel({
-    required this.type,
+  final String type;
+  final String name;
+  final String username;
+  final String email;
+  final String phone;
+  final String gender;
+  final String fcmToken;
+  final String preferredGender;
+  final String currentLocation;
+  final String createdAt;
+  final String profilePhotoUrl;
+  final String square100ProfilePhotoUrl;
+  final int age;
+
+  CustomerModel({
     required this.id,
-    required this.attributes,
+    required this.type,
+    required this.name,
+    required this.username,
+    required this.email,
+    required this.phone,
+    required this.gender,
+    required this.fcmToken,
+    required this.preferredGender,
+    required this.currentLocation,
+    required this.createdAt,
+    required this.profilePhotoUrl,
+    required this.square100ProfilePhotoUrl,
+    required this.age,
   });
 
-  CustomerBaseModelModel copyWith({
-    String? type,
-    String? id,
-    AttributesModel? attributes,
-  }) {
-    return CustomerBaseModelModel(
-      type: type ?? this.type,
-      id: id ?? this.id,
-      attributes: attributes ?? this.attributes,
+  factory CustomerModel.fromJson(Map<String, dynamic> json) {
+    return CustomerModel(
+      id: json['id'] ?? '',
+      type: json['type'] ?? '',
+      name: json['name'] ?? '',
+      username: json['username'] ?? '',
+      email: json['email'] ?? '',
+      phone: json['phone'] ?? '',
+      gender: json['gender'] ?? '',
+      fcmToken: json['fcm_token'] ?? '',
+      preferredGender: json['preffered_gender'] ?? '',
+      currentLocation: json['current_location'] ?? '',
+      createdAt: json['created_at'] ?? '',
+      profilePhotoUrl: json['profile_photo_url'] ?? '',
+      square100ProfilePhotoUrl: json['square100_profile_photo_url'] ?? '',
+      age: json['age'] ?? 0,
     );
   }
-
-  factory CustomerBaseModelModel.fromJson(Map<String, dynamic> json) {
-    return CustomerBaseModelModel(
-      type: json['type']??"",
-      id: json['id']??"",
-      attributes:  json['attributes'] != null
-        ? AttributesModel.fromMap(json['attributes'])
-        : throw Exception("Missing 'attributs' in JSON"),
-    );
-  }
-
-  @override
-  String toString() =>
-      'CustomerBaseModelModel(type: $type, id: $id, attributes: $attributes)';
-
-  @override
-  bool operator ==(covariant CustomerBaseModelModel other) {
-    if (identical(this, other)) return true;
-
-    return other.type == type &&
-        other.id == id &&
-        other.attributes == attributes;
-  }
-
-  @override
-  int get hashCode => type.hashCode ^ id.hashCode ^ attributes.hashCode;
 }

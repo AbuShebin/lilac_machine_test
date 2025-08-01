@@ -51,8 +51,8 @@ class ChatScreen extends ConsumerWidget {
               itemCount: data.length,
               itemBuilder: (context, index) {
                 final message = data[index];
-                final isMe = message.attributes.senderId.toString() == currentUserId;
-                final sentAt = message.attributes.sentAt;
+                final isMe = message.senderId.toString() == currentUserId;
+                final sentAt = message.sentAt;
                 final timeText = sentAt != null
                     ? '${sentAt.hour}:${sentAt.minute.toString().padLeft(2, '0')}'
                     : '';
@@ -77,7 +77,7 @@ class ChatScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Text(
-                          message.attributes.message,
+                          message.message,
                           style: TextStyle(
                             color: isMe ? Colors.white : Colors.black,
                             fontSize: 16,
